@@ -27,53 +27,82 @@ function createPlayer (name, mark) {
     console.log(player1);
     console.log(player2);
 
-    // First Row
+    // // First Row
+    // Gameboard.grid[0][0] = player1.playerMark;
+    // Gameboard.grid[0][1] = player2.playerMark;
+    // Gameboard.grid[0][2] = player1.playerMark;
+
+    // // Second row
+    // Gameboard.grid[1][0] = player2.playerMark;
+    // Gameboard.grid[1][1] = player1.playerMark;
+    // Gameboard.grid[1][2] = player2.playerMark;
+
+    // // Third row
+    // Gameboard.grid[2][0] = player1.playerMark;
+    // console.log(Gameboard.grid);
+    // evalBoard(player1);
+    // Gameboard.grid[2][1] = player2.playerMark;
+    // console.log(Gameboard.grid);
+    // evalBoard(player2);
+    // Gameboard.grid[2][2] = player1.playerMark;
+    // console.log(Gameboard.grid);
+    // evalBoard(player1);
+
+    // console.log(Gameboard.grid);
+
     Gameboard.grid[0][0] = player1.playerMark;
-    Gameboard.grid[0][1] = player2.playerMark;
-    Gameboard.grid[0][2] = player1.playerMark;
-
-    // Second row
-    Gameboard.grid[1][0] = player1.playerMark;
-    Gameboard.grid[1][1] = player2.playerMark;
-    Gameboard.grid[1][2] = player1.playerMark;
-
-    // Third row
-    Gameboard.grid[2][0] = player1.playerMark;
-    Gameboard.grid[2][1] = player2.playerMark;
-    Gameboard.grid[2][2] = player1.playerMark;
-
     console.log(Gameboard.grid);
-    evalBoard();
+
+    Gameboard.grid[0][0]
 })();
 
 
-function evalBoard () {
+function evalBoard (player) {
     // Row Level eval
     if (Gameboard.grid[0][0] === Gameboard.grid[0][1] && Gameboard.grid[0][1] === Gameboard.grid[0][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[0][0]) {
+            console.log(player.playerName + " won");
+        }  
     }
     else if (Gameboard.grid[1][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[1][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[1][0]) {
+            console.log(player.playerName + " won");
+        }        
     }
     else if (Gameboard.grid[2][0] === Gameboard.grid[2][1] && Gameboard.grid[2][1] === Gameboard.grid[2][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[2][0]) {
+            console.log(player.playerName + " won");
+        }        
     }
     // Column level
     else if (Gameboard.grid[1][0] === Gameboard.grid[1][0] && Gameboard.grid[1][0] === Gameboard.grid[2][0]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[1][0]) {
+            console.log(player.playerName + " won");
+        }     
     }
 
     else if (Gameboard.grid[1][1] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][1]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[1][1]) {
+            console.log(player.playerName + " won");
+        }     
     }
     else if (Gameboard.grid[1][2] === Gameboard.grid[1][2] && Gameboard.grid[1][2] === Gameboard.grid[2][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[1][2]) {
+            console.log(player.playerName + " won");
+        }         
     }
     // Diagonal 
     else if (Gameboard.grid[0][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[0][0]) {
+            console.log(player.playerName + " won");
+        }        
     }
     else if (Gameboard.grid[2][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[0][2]) {
-        console.log("you win");
+        if (player.playerMark === Gameboard.grid[2][0]) {
+            console.log(player.playerName + " won");
+        }         
+    }
+    else {
+        console.log("It's a tie");
     }
 }
