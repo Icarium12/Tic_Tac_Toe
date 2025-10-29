@@ -17,89 +17,124 @@ const Gameboard = (function () {
 function createPlayer (name, mark) {
     const playerName = name;
     const playerMark = mark;
+    const playerWin = false;
 
-    return {playerName, playerMark};
+    return {playerName, playerMark, playerWin};
 }
 
 (function runGame() {
-    const player1 = createPlayer(prompt("Enter your name"), prompt("What is your mark"));
-    const player2 = createPlayer(prompt("Enter your name"), prompt("What is your mark"));
+    const player1 = createPlayer("Praise", "X");
+    const player2 = createPlayer("Computer", "O");
     console.log(player1);
     console.log(player2);
 
-    // // First Row
-    // Gameboard.grid[0][0] = player1.playerMark;
-    // Gameboard.grid[0][1] = player2.playerMark;
-    // Gameboard.grid[0][2] = player1.playerMark;
+    let running = true;
 
-    // // Second row
-    // Gameboard.grid[1][0] = player2.playerMark;
-    // Gameboard.grid[1][1] = player1.playerMark;
-    // Gameboard.grid[1][2] = player2.playerMark;
+    while (running) {
+        getplayerMove(player1);
+        getplayerMove(player2);
+        console.log(Gameboard.grid);
 
-    // // Third row
-    // Gameboard.grid[2][0] = player1.playerMark;
-    // console.log(Gameboard.grid);
-    // evalBoard(player1);
-    // Gameboard.grid[2][1] = player2.playerMark;
-    // console.log(Gameboard.grid);
-    // evalBoard(player2);
-    // Gameboard.grid[2][2] = player1.playerMark;
-    // console.log(Gameboard.grid);
-    // evalBoard(player1);
+        getplayerMove(player1);
+        getplayerMove(player2);
+        console.log(Gameboard.grid);
 
-    // console.log(Gameboard.grid);
+        getplayerMove(player1);
+        console.log(Gameboard.grid);
+        evalBoard(player1);
+        if (player1.playerWin === true) {
+            break;
+        }
 
-    Gameboard.grid[0][0] = player1.playerMark;
-    console.log(Gameboard.grid);
+        getplayerMove(player2);
+        console.log(Gameboard.grid);
+        evalBoard(player2);
+        if (player2.playerWin === true) {
+            break;
+        }
 
-    Gameboard.grid[0][0]
+        getplayerMove(player1);
+        console.log(Gameboard.grid);
+        evalBoard(player1);
+        if (player1.playerWin === true) {
+            break;
+        }
+
+        getplayerMove(player2);
+        console.log(Gameboard.grid);
+        evalBoard(player2);
+        if (player2.playerWin === true) {
+            break;
+        }
+
+        getplayerMove(player1);
+        console.log(Gameboard.grid);
+        evalBoard(player1);
+        if (player1.playerWin === true) {
+            break;
+        }
+        break;
+    }
 })();
 
+function getplayerMove(player) {
+    let row = prompt("Select Row to play")
+    let column = prompt("Select column to play");
+
+    Gameboard.grid[row][column] = player.playerMark;
+};
 
 function evalBoard (player) {
     // Row Level eval
     if (Gameboard.grid[0][0] === Gameboard.grid[0][1] && Gameboard.grid[0][1] === Gameboard.grid[0][2]) {
         if (player.playerMark === Gameboard.grid[0][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }  
     }
     else if (Gameboard.grid[1][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[1][2]) {
         if (player.playerMark === Gameboard.grid[1][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }        
     }
     else if (Gameboard.grid[2][0] === Gameboard.grid[2][1] && Gameboard.grid[2][1] === Gameboard.grid[2][2]) {
         if (player.playerMark === Gameboard.grid[2][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }        
     }
     // Column level
     else if (Gameboard.grid[1][0] === Gameboard.grid[1][0] && Gameboard.grid[1][0] === Gameboard.grid[2][0]) {
         if (player.playerMark === Gameboard.grid[1][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }     
     }
 
     else if (Gameboard.grid[1][1] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][1]) {
         if (player.playerMark === Gameboard.grid[1][1]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }     
     }
     else if (Gameboard.grid[1][2] === Gameboard.grid[1][2] && Gameboard.grid[1][2] === Gameboard.grid[2][2]) {
         if (player.playerMark === Gameboard.grid[1][2]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }         
     }
     // Diagonal 
     else if (Gameboard.grid[0][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][2]) {
         if (player.playerMark === Gameboard.grid[0][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }        
     }
     else if (Gameboard.grid[2][0] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[0][2]) {
         if (player.playerMark === Gameboard.grid[2][0]) {
             console.log(player.playerName + " won");
+            player.playerWin = true;
         }         
     }
     else {
