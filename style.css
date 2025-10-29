@@ -1,1 +1,9 @@
+.gameboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 
+button {
+    height: 10rem;
+    width: 10rem;
+}
