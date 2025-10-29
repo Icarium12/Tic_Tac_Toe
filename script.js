@@ -13,6 +13,13 @@ const Gameboard = (function () {
     return {grid}
 })();
 
+const Display = (function () {
+    const boxes = document.querySelectorAll('button');
+    boxes[0].textContent = 100
+    boxes[1].textContent = 100
+    boxes[2].textContent = 100
+    return {boxes};
+})();
 
 function createPlayer (name, mark) {
     const playerName = name;
@@ -22,60 +29,74 @@ function createPlayer (name, mark) {
     return {playerName, playerMark, playerWin};
 }
 
-(function runGame() {
-    const player1 = createPlayer("Praise", "X");
-    const player2 = createPlayer("Computer", "O");
-    console.log(player1);
-    console.log(player2);
+function renderGame() {
+    Gameboard.grid[0][0] = Display.boxes[0].textContent;  
+    Gameboard.grid[0][1] = Display.boxes[1].textContent;  
+    Gameboard.grid[0][2] = Display.boxes[2].textContent;  
 
-    let running = true;
+    Gameboard.grid[1][0] = Display.boxes[3].textContent;  
+    Gameboard.grid[1][1] = Display.boxes[4].textContent;  
+    Gameboard.grid[1][2] = Display.boxes[5].textContent;  
 
-    while (running) {
-        getplayerMove(player1);
-        getplayerMove(player2);
-        console.log(Gameboard.grid);
+    Gameboard.grid[2][0] = Display.boxes[6].textContent;
+    Gameboard.grid[2][1] = Display.boxes[7].textContent; 
+    Gameboard.grid[2][2] = Display.boxes[8].textContent; 
+}
 
-        getplayerMove(player1);
-        getplayerMove(player2);
-        console.log(Gameboard.grid);
+// (function runGame() {
+//     const player1 = createPlayer("Praise", "X");
+//     const player2 = createPlayer("Computer", "O");
+//     console.log(player1);
+//     console.log(player2);
 
-        getplayerMove(player1);
-        console.log(Gameboard.grid);
-        evalBoard(player1);
-        if (player1.playerWin === true) {
-            break;
-        }
+//     let running = true;
 
-        getplayerMove(player2);
-        console.log(Gameboard.grid);
-        evalBoard(player2);
-        if (player2.playerWin === true) {
-            break;
-        }
+//     while (running) {
+//         getplayerMove(player1);
+//         getplayerMove(player2);
+//         console.log(Gameboard.grid);
 
-        getplayerMove(player1);
-        console.log(Gameboard.grid);
-        evalBoard(player1);
-        if (player1.playerWin === true) {
-            break;
-        }
+//         getplayerMove(player1);
+//         getplayerMove(player2);
+//         console.log(Gameboard.grid);
 
-        getplayerMove(player2);
-        console.log(Gameboard.grid);
-        evalBoard(player2);
-        if (player2.playerWin === true) {
-            break;
-        }
+//         getplayerMove(player1);
+//         console.log(Gameboard.grid);
+//         evalBoard(player1);
+//         if (player1.playerWin === true) {
+//             break;
+//         }
 
-        getplayerMove(player1);
-        console.log(Gameboard.grid);
-        evalBoard(player1);
-        if (player1.playerWin === true) {
-            break;
-        }
-        break;
-    }
-})();
+//         getplayerMove(player2);
+//         console.log(Gameboard.grid);
+//         evalBoard(player2);
+//         if (player2.playerWin === true) {
+//             break;
+//         }
+
+//         getplayerMove(player1);
+//         console.log(Gameboard.grid);
+//         evalBoard(player1);
+//         if (player1.playerWin === true) {
+//             break;
+//         }
+
+//         getplayerMove(player2);
+//         console.log(Gameboard.grid);
+//         evalBoard(player2);
+//         if (player2.playerWin === true) {
+//             break;
+//         }
+
+//         getplayerMove(player1);
+//         console.log(Gameboard.grid);
+//         evalBoard(player1);
+//         if (player1.playerWin === true) {
+//             break;
+//         }
+//         break;
+//     }
+// })();
 
 function getplayerMove(player) {
     let row = prompt("Select Row to play")
