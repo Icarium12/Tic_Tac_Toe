@@ -46,17 +46,21 @@ function renderGame() {
 (function runGame() {
     const player1 = createPlayer("Praise", "X");
     const player2 = createPlayer("Computer", "O");
-    console.log(player1);
-    console.log(player2);
 
     let currentPlayer = player1;
+    let previousPlayer;
+    let round = 1;
     function switchPlayer(element) {
         if (currentPlayer === player1) {
             element.textContent = currentPlayer.playerMark;
+            round++
+            previousPlayer = currentPlayer
             currentPlayer = player2;
         }
         else {
             element.textContent = currentPlayer.playerMark;
+            round++
+            previousPlayer = currentPlayer;
             currentPlayer = player1;
         }
     }
@@ -66,6 +70,9 @@ function renderGame() {
             switchPlayer(box);
             renderGame();
             console.log(Gameboard.grid);
+            evalBoard(previousPlayer);
+            console.log(previousPlayer);
+            console.log(previousPlayer.playerWin);
         }, {once: true});
     });
     
@@ -92,21 +99,21 @@ function evalBoard (player) {
         }        
     }
     // Column level
-    else if (Gameboard.grid[1][0] === Gameboard.grid[1][0] && Gameboard.grid[1][0] === Gameboard.grid[2][0]) {
+    else if (Gameboard.grid[0][0] === Gameboard.grid[1][0] && Gameboard.grid[1][0] === Gameboard.grid[2][0]) {
         if (player.playerMark === Gameboard.grid[1][0]) {
             console.log(player.playerName + " won");
             player.playerWin = true;
         }     
     }
 
-    else if (Gameboard.grid[1][1] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][1]) {
-        if (player.playerMark === Gameboard.grid[1][1]) {
+    else if (Gameboard.grid[0][1] === Gameboard.grid[1][1] && Gameboard.grid[1][1] === Gameboard.grid[2][1]) {
+        if (player.playerMark === Gameboard.grid[0][1]) {
             console.log(player.playerName + " won");
             player.playerWin = true;
         }     
     }
-    else if (Gameboard.grid[1][2] === Gameboard.grid[1][2] && Gameboard.grid[1][2] === Gameboard.grid[2][2]) {
-        if (player.playerMark === Gameboard.grid[1][2]) {
+    else if (Gameboard.grid[0][2] === Gameboard.grid[1][2] && Gameboard.grid[1][2] === Gameboard.grid[2][2]) {
+        if (player.playerMark === Gameboard.grid[0][2]) {
             console.log(player.playerName + " won");
             player.playerWin = true;
         }         
