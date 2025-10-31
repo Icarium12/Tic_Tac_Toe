@@ -14,9 +14,13 @@ const Gameboard = (function () {
 })();
 
 const Display = (function () {
-    const boxes = document.querySelectorAll('button');
-    return {boxes};
+    const boxes = document.querySelectorAll('.box');
+    const p1Name = document.querySelector('.player1');
+    const p2Name = document.querySelector('.player2');
+    const startGame = document.querySelector('.start');
+    return {boxes, p1Name, p2Name, startGame};
 })();
+
 
 function createPlayer (name, mark) {
     const playerName = name;
@@ -44,39 +48,82 @@ function renderGame() {
 
 
 (function runGame() {
-    const player1 = createPlayer("Praise", "X");
-    const player2 = createPlayer("Computer", "O");
+    const player1 = createPlayer(prompt("Player 1 name: "), 'X');
+    
+    const player2 = createPlayer(prompt("Player 2 name: "), "O");
 
-    let currentPlayer = player1;
-    let previousPlayer;
-    let round = 1;
-    function switchPlayer(element) {
-        if (currentPlayer === player1) {
-            element.textContent = currentPlayer.playerMark;
-            round++
-            previousPlayer = currentPlayer
-            currentPlayer = player2;
-        }
-        else {
-            element.textContent = currentPlayer.playerMark;
-            round++
-            previousPlayer = currentPlayer;
-            currentPlayer = player1;
-        }
-    }
+    Display.p1Name.textContent = `Player 1: ${player1.playerName}`;
+    Display.p2Name.textContent = `Player 2: ${player2.playerName}`;
 
-    Display.boxes.forEach((box) => {
-        box.addEventListener('click', () => {
-            switchPlayer(box);
+    Display.startGame.addEventListener('click', () => {
+        Display.boxes.forEach((box) => {
+            box.textContent = "";
             renderGame();
-            console.log(Gameboard.grid);
-            evalBoard(previousPlayer);
-            console.log(previousPlayer);
-            console.log(previousPlayer.playerWin);
-        }, {once: true});
-    });
+        })
+        let currentPlayer = player1;
+        let previousPlayer;
+        let round = 1;
+        function switchPlayer(element) {
+            if (currentPlayer === player1) {
+                element.textContent = currentPlayer.playerMark;
+                round++
+                previousPlayer = currentPlayer
+                currentPlayer = player2;
+            }
+            else {
+                element.textContent = currentPlayer.playerMark;
+                round++
+                previousPlayer = currentPlayer;
+                currentPlayer = player1;
+            }
+        }
+
+        Display.boxes.forEach((box) => {
+            box.addEventListener('click', () => {
+                switchPlayer(box);
+                renderGame();
+                console.log(Gameboard.grid);
+                evalBoard(previousPlayer);
+                console.log(previousPlayer);
+                console.log(previousPlayer.playerWin);
+            }, {once: true});
+        });
+    })
+    
+    // let currentPlayer = player1;
+    // let previousPlayer;
+    // let round = 1;
+    // function switchPlayer(element) {
+    //     if (currentPlayer === player1) {
+    //         element.textContent = currentPlayer.playerMark;
+    //         round++
+    //         previousPlayer = currentPlayer
+    //         currentPlayer = player2;
+    //     }
+    //     else {
+    //         element.textContent = currentPlayer.playerMark;
+    //         round++
+    //         previousPlayer = currentPlayer;
+    //         currentPlayer = player1;
+    //     }
+    // }
+
+    // Display.boxes.forEach((box) => {
+    //     box.addEventListener('click', () => {
+    //         switchPlayer(box);
+    //         renderGame();
+    //         console.log(Gameboard.grid);
+    //         evalBoard(previousPlayer);
+    //         console.log(previousPlayer);
+    //         console.log(previousPlayer.playerWin);
+    //     }, {once: true});
+    // });
     
 })();
+
+function DisplayWinner() {
+    
+}
 
 function evalBoard (player) {
     // Row Level eval
