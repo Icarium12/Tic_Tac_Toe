@@ -17,9 +17,11 @@ const Display = (function () {
     const boxes = document.querySelectorAll('.box');
     const p1Name = document.querySelector('.player1');
     const p2Name = document.querySelector('.player2');
+    const p1Input = document.querySelector('#p1Name');
+    const p2Input = document.querySelector('#p2name');
     const startGame = document.querySelector('.start');
     const results  = document.querySelector('.results');
-    return {boxes, p1Name, p2Name, startGame, results};
+    return {boxes, p1Name, p2Name, p1Input, p2Input, startGame, results};
 })();
 
 
@@ -56,9 +58,9 @@ function renderGame() {
 function runGame() {
     localStorage.clear();
     Display.results.textContent = "";
-    const player1 = createPlayer(prompt("Player 1 name: "), 'X');
+    const player1 = createPlayer(Display.p1Input.value,  'X');
     
-    const player2 = createPlayer(prompt("Player 2 name: "), "O");
+    const player2 = createPlayer(Display.p2Input.value, "O");
 
     Display.p1Name.textContent = `Player 1: ${player1.playerName}`;
     Display.p2Name.textContent = `Player 2: ${player2.playerName}`;
