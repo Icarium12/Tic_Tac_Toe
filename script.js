@@ -54,6 +54,7 @@ function renderGame() {
 
 
 function runGame() {
+    localStorage.clear();
     Display.results.textContent = "";
     const player1 = createPlayer(prompt("Player 1 name: "), 'X');
     
