@@ -54,6 +54,7 @@ function renderGame() {
 
 
 function runGame() {
+    Display.results.textContent = "";
     const player1 = createPlayer(prompt("Player 1 name: "), 'X');
     
     const player2 = createPlayer(prompt("Player 2 name: "), "O");
@@ -72,13 +73,11 @@ function runGame() {
     function switchPlayer(element) {
         if (currentPlayer === player1) {
             element.textContent = currentPlayer.playerMark;
-            round++
             previousPlayer = currentPlayer
             currentPlayer = player2;
         }
         else {
             element.textContent = currentPlayer.playerMark;
-            round++
             previousPlayer = currentPlayer;
             currentPlayer = player1;
         }
@@ -87,18 +86,16 @@ function runGame() {
     Display.boxes.forEach((box) => {
         box.addEventListener('click', (e) => {
             switchPlayer(box);
+            round++
             renderGame();
-            console.log(Gameboard.grid);
             evalBoard(previousPlayer);
-            console.log(previousPlayer);
-            console.log(previousPlayer.playerWin);
-            console.log(round);
             displayWinner(previousPlayer, round, Display.results);
             if (previousPlayer.playerWin === true) {
-                console.log("check test");
                 Display.boxes.forEach((box) => {
                     box.disabled = true;
                 })
+                previousPlayer.playerWin = false;
+                round = 0;
             }
         }, {once: true});
     });   
@@ -116,57 +113,46 @@ function displayWinner (player, round, element) {
 function evalBoard (player) {
     // Row Level eval
     if ((Gameboard.grid[0][0] === Gameboard.grid[0][1]) && (Gameboard.grid[0][1] === Gameboard.grid[0][2])) {
-        if (player.playerMark === Gameboard.grid[0][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[0][0] && player.playerMark === Gameboard.grid[0][1] && player.playerMark === Gameboard.grid[0][2]) {
             player.playerWin = true;
         }  
     }
     else if ((Gameboard.grid[1][0] === Gameboard.grid[1][1]) && (Gameboard.grid[1][1] === Gameboard.grid[1][2])) {
-        if (player.playerMark === Gameboard.grid[1][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[1][0] && player.playerMark === Gameboard.grid[1][1] && player.playerMark === Gameboard.grid[1][2]) {
             player.playerWin = true;
         }        
     }
     else if ((Gameboard.grid[2][0] === Gameboard.grid[2][1]) && (Gameboard.grid[2][1] === Gameboard.grid[2][2])) {
-        if (player.playerMark === Gameboard.grid[2][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[2][0] && player.playerMark === Gameboard.grid[2][1] && player.playerMark === Gameboard.grid[2][2]) {
             player.playerWin = true;
         }        
     }
     // Column level
     else if ((Gameboard.grid[0][0] === Gameboard.grid[1][0]) && (Gameboard.grid[1][0] === Gameboard.grid[2][0])) {
-        if (player.playerMark === Gameboard.grid[0][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[0][0] && player.playerMark === Gameboard.grid[1][0] && player.playerMark === Gameboard.grid[2][0]) {
             player.playerWin = true;
         }     
     }
 
     else if ((Gameboard.grid[0][1] === Gameboard.grid[1][1]) && (Gameboard.grid[1][1] === Gameboard.grid[2][1])) {
-        if (player.playerMark === Gameboard.grid[0][1]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[0][1] && player.playerMark === Gameboard.grid[1][1] && player.playerMark === Gameboard.grid[2][1]) {
             player.playerWin = true;
         }     
     }
     else if ((Gameboard.grid[0][2] === Gameboard.grid[1][2]) && (Gameboard.grid[1][2] === Gameboard.grid[2][2])) {
-        if (player.playerMark === Gameboard.grid[0][2]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[0][2] && player.playerMark === Gameboard.grid[1][2] && player.playerMark === Gameboard.grid[2][2]) {
             player.playerWin = true;
         }         
     }
     // Diagonal 
     else if ((Gameboard.grid[0][0] === Gameboard.grid[1][1]) && (Gameboard.grid[1][1] === Gameboard.grid[2][2])) {
-        if (player.playerMark === Gameboard.grid[0][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[0][0] && player.playerMark === Gameboard.grid[1][1] && player.playerMark === Gameboard.grid[2][2]) {
             player.playerWin = true;
         }        
     }
     else if ((Gameboard.grid[2][0] === Gameboard.grid[1][1]) && (Gameboard.grid[1][1] === Gameboard.grid[0][2])) {
-        if (player.playerMark === Gameboard.grid[2][0]) {
-            console.log(player.playerName + " won");
+        if (player.playerMark === Gameboard.grid[2][0] && player.playerMark === Gameboard.grid[1][1] && player.playerMark === Gameboard.grid[0][2]) {
             player.playerWin = true;
         }         
-    }
-    else {
-        console.log("It's a tie");
     }
 }
