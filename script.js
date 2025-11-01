@@ -18,7 +18,8 @@ const Display = (function () {
     const p1Name = document.querySelector('.player1');
     const p2Name = document.querySelector('.player2');
     const startGame = document.querySelector('.start');
-    return {boxes, p1Name, p2Name, startGame};
+    const results  = document.querySelector('.results');
+    return {boxes, p1Name, p2Name, startGame, results};
 })();
 
 
@@ -26,7 +27,6 @@ function createPlayer (name, mark) {
     const playerName = name;
     const playerMark = mark;
     const playerWin = false;
-
     return {playerName, playerMark, playerWin};
 }
 
@@ -46,8 +46,14 @@ function renderGame() {
     Gameboard.grid[2][2] = Display.boxes[8].textContent; 
 }
 
+(function playGame() {
+    Display.startGame.addEventListener('click', () => {
+        runGame();
+    })
+})();
 
-(function runGame() {
+
+function runGame() {
     const player1 = createPlayer(prompt("Player 1 name: "), 'X');
     
     const player2 = createPlayer(prompt("Player 2 name: "), "O");
@@ -55,74 +61,56 @@ function renderGame() {
     Display.p1Name.textContent = `Player 1: ${player1.playerName}`;
     Display.p2Name.textContent = `Player 2: ${player2.playerName}`;
 
-    Display.startGame.addEventListener('click', () => {
-        Display.boxes.forEach((box) => {
-            box.textContent = "";
-            renderGame();
-        })
-        let currentPlayer = player1;
-        let previousPlayer;
-        let round = 1;
-        function switchPlayer(element) {
-            if (currentPlayer === player1) {
-                element.textContent = currentPlayer.playerMark;
-                round++
-                previousPlayer = currentPlayer
-                currentPlayer = player2;
-            }
-            else {
-                element.textContent = currentPlayer.playerMark;
-                round++
-                previousPlayer = currentPlayer;
-                currentPlayer = player1;
-            }
-        }
-
-        Display.boxes.forEach((box) => {
-            box.addEventListener('click', () => {
-                switchPlayer(box);
-                renderGame();
-                console.log(Gameboard.grid);
-                evalBoard(previousPlayer);
-                console.log(previousPlayer);
-                console.log(previousPlayer.playerWin);
-            }, {once: true});
-        });
+    Display.boxes.forEach((box) => {
+        box.disabled = false;
+        box.textContent = "";
+        renderGame();
     })
-    
-    // let currentPlayer = player1;
-    // let previousPlayer;
-    // let round = 1;
-    // function switchPlayer(element) {
-    //     if (currentPlayer === player1) {
-    //         element.textContent = currentPlayer.playerMark;
-    //         round++
-    //         previousPlayer = currentPlayer
-    //         currentPlayer = player2;
-    //     }
-    //     else {
-    //         element.textContent = currentPlayer.playerMark;
-    //         round++
-    //         previousPlayer = currentPlayer;
-    //         currentPlayer = player1;
-    //     }
-    // }
+    let currentPlayer = player1;
+    let previousPlayer;
+    let round = 0;
+    function switchPlayer(element) {
+        if (currentPlayer === player1) {
+            element.textContent = currentPlayer.playerMark;
+            round++
+            previousPlayer = currentPlayer
+            currentPlayer = player2;
+        }
+        else {
+            element.textContent = currentPlayer.playerMark;
+            round++
+            previousPlayer = currentPlayer;
+            currentPlayer = player1;
+        }
+    }
 
-    // Display.boxes.forEach((box) => {
-    //     box.addEventListener('click', () => {
-    //         switchPlayer(box);
-    //         renderGame();
-    //         console.log(Gameboard.grid);
-    //         evalBoard(previousPlayer);
-    //         console.log(previousPlayer);
-    //         console.log(previousPlayer.playerWin);
-    //     }, {once: true});
-    // });
-    
-})();
+    Display.boxes.forEach((box) => {
+        box.addEventListener('click', (e) => {
+            switchPlayer(box);
+            renderGame();
+            console.log(Gameboard.grid);
+            evalBoard(previousPlayer);
+            console.log(previousPlayer);
+            console.log(previousPlayer.playerWin);
+            console.log(round);
+            displayWinner(previousPlayer, round, Display.results);
+            if (previousPlayer.playerWin === true) {
+                console.log("check test");
+                Display.boxes.forEach((box) => {
+                    box.disabled = true;
+                })
+            }
+        }, {once: true});
+    });   
+};
 
-function DisplayWinner() {
-    
+function displayWinner (player, round, element) {
+    if (player.playerWin === true) {
+        element.textContent = `${player.playerName} wins! Press start to replay`;
+    }
+    else if ((round === 9) && (player.playerWin === false)) {
+        element.textContent = "It's a tie, Press start to restart game";
+    }
 }
 
 function evalBoard (player) {
@@ -147,7 +135,7 @@ function evalBoard (player) {
     }
     // Column level
     else if (Gameboard.grid[0][0] === Gameboard.grid[1][0] && Gameboard.grid[1][0] === Gameboard.grid[2][0]) {
-        if (player.playerMark === Gameboard.grid[1][0]) {
+        if (player.playerMark === Gameboard.grid[0][0]) {
             console.log(player.playerName + " won");
             player.playerWin = true;
         }     
